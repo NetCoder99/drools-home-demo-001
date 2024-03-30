@@ -1,0 +1,24 @@
+import org.home.demo.x001.models.TaxiFare;
+import org.home.demo.x001.models.TaxiRide;
+
+dialect  "mvel"
+
+rule "Calculate Taxi Fare - Scenario 1"
+    when
+        taxiRideAlias:TaxiRide(isNightSurcharge == false && distanceInMile < 10);
+    then
+        TaxiFare taxiFare = new TaxiFare();
+        taxiFare.setNightSurcharge(0);
+        taxiFare.setRideFare(taxiRideAlias.distanceInMile * taxiRideAlias.perMileCharge);
+        insert( taxiFare );
+end
+
+rule "Calculate Taxi Fare - Scenario 2"
+    when
+        taxiRideInstance:TaxiRide(isNightSurcharge == true && distanceInMile < 10);
+    then
+        TaxiFare taxiFare = new TaxiFare();
+        taxiFare.setNightSurcharge(1);
+        taxiFare.setRideFare(90);
+        insert( taxiFare );
+end

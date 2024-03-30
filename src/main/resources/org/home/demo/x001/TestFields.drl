@@ -1,0 +1,35 @@
+import org.home.demo.x001.models.TestDataObject;
+import org.home.demo.x001.models.ResponseObject;
+
+dialect "mvel"
+
+rule "TestFieldsTable Hello_10"
+	when
+        testObjectAlias:TestDataObject(test_field1 == "X1");
+	then
+        testObjectAlias.setTest_field3("Test 1 was true");
+end
+
+rule "TestFieldsTable Hello_12"
+	when
+        testObjectAlias:TestDataObject(test_field1 == "X2");
+	then
+        testObjectAlias.setTest_field3("Test 2 was true");
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setResponseCD("X2");
+        responseObject.setResponseMsg("Test 2 was true");
+        insert( responseObject );
+end
+
+//import org.home.demo.x001.models.TaxiFare;
+//import org.home.demo.x001.models.TaxiRide;
+//dialect  "mvel"
+//rule "Calculate Taxi Fare - Scenario 1"
+//    when
+//        taxiRideAlias:TaxiRide(isNightSurcharge == false && distanceInMile < 10);
+//    then
+//		TaxiFare taxiFare = new TaxiFare();
+//      	taxiFare.setNightSurcharge(0);
+//       	taxiFare.setRideFare(taxiRideAlias.distanceInMile * taxiRideAlias.perMileCharge);
+//       	insert( taxiFare );
+//end
