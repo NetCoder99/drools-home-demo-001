@@ -1,15 +1,25 @@
 package org.home.demo.x001.classes;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.home.demo.x001.models.TaxiRide;
 import org.kie.api.runtime.KieSession;
 import org.home.demo.x001.models.TestDataObject;
 import org.kie.api.runtime.rule.FactHandle;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 public class TestCases {
-    private static Gson gson = new Gson();
+    static Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+            .create();
+
+    public static void TestFieldsAll(KieSession kieSession) {
+        TestFieldsSet01(kieSession);
+        TestFieldsSet02(kieSession);
+        TestFieldsSet03(kieSession);
+    }
 
     public static void TestFieldsSet01(KieSession kieSession) {
         System.out.println( "---- TestFieldsSet01 starting" );
@@ -29,11 +39,31 @@ public class TestCases {
         TestDataObject testDataObject = new TestDataObject();
         testDataObject.setTest_field1("T2");
         testDataObject.setTest_field2(3);
+        testDataObject.setTest_field4(LocalDate.parse("2024-12-31"));
+
         kieSession.insert(testDataObject);
         int rules_fired = kieSession.fireAllRules();
         System.out.println( "rules fired  : " + rules_fired );
         DisplayResults(kieSession, "Test fields rules");
         System.out.println( "---- TestFieldsSet02 completed" );
+    }
+
+    public static void TestFieldsSet03(KieSession kieSession) {
+        System.out.println( "---- TestFieldsSet03 starting" );
+
+
+        KieSessionUtil.ClearAllFacts(kieSession);
+
+        TestDataObject testDataObject = new TestDataObject();
+        testDataObject.setTest_field1("T3");
+        testDataObject.setTest_field2(34);
+        testDataObject.setTest_field4(LocalDate.parse("2024-01-01"));
+        kieSession.insert(testDataObject);
+        int rules_fired = kieSession.fireAllRules();
+
+        System.out.println( "rules fired  : " + rules_fired );
+        DisplayResults(kieSession, "Test fields rules");
+        System.out.println( "---- TestFieldsSet03 completed" );
     }
 
     public static void TestTaxiRide01(KieSession kieSession) {

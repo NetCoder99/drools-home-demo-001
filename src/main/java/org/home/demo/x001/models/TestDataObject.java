@@ -1,4 +1,5 @@
 package org.home.demo.x001.models;
+import java.time.LocalDate;
 
 public class TestDataObject implements java.io.Serializable {
 
@@ -11,6 +12,8 @@ public class TestDataObject implements java.io.Serializable {
 	public Integer test_field2;
 
 	public String test_field3;
+
+	private LocalDate test_field4;
 
 	public TestDataObject() {
 	}
@@ -45,5 +48,13 @@ public class TestDataObject implements java.io.Serializable {
 
 	public void setTest_field3(String test_field3) {
 		this.test_field3 = test_field3;
+	}
+
+	public LocalDate getTest_field4() {
+		return test_field4;
+	}
+
+	public void setTest_field4(LocalDate test_field4) {
+		this.test_field4 = test_field4;
 	}
 }

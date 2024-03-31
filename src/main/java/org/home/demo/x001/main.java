@@ -8,6 +8,8 @@ import org.kie.api.runtime.KieSession;
 import java.io.IOException;
 import java.util.List;
 
+import static org.home.demo.x001.classes.TestCases.TestFieldsAll;
+
 public class main {
     private static KieSessionUtil kieSessionUtil = new KieSessionUtil();
 
@@ -26,20 +28,17 @@ public class main {
     public static void TestFieldsTestsXls() throws IOException {
         String drlString = kieSessionUtil.getDrlFromExcel(xlsFileNameTest, "Sheet");
         System.out.println( "Drl String:\n" + drlString);
-
         KieSession kieSession1 = kieSessionUtil.getKieSession1(xlsFileNameTest);
         List<RuleDefinition> rulesList = kieSessionUtil.GetAllRulesNames(kieSession1);
         System.out.println( "rulesList: \n" + rulesList );
-        TestCases.TestFieldsSet01(kieSession1);
-        TestCases.TestFieldsSet02(kieSession1);
+        TestFieldsAll(kieSession1);
     }
 
     public static void TestFieldsTestsDrl() throws IOException {
         KieSession kieSession1 = kieSessionUtil.getKieSession1(drlFileNameTest);
         List<RuleDefinition> rulesList = kieSessionUtil.GetAllRulesNames(kieSession1);
         System.out.println( "rulesList: \n" + rulesList );
-        TestCases.TestFieldsSet01(kieSession1);
-        TestCases.TestFieldsSet02(kieSession1);
+        TestFieldsAll(kieSession1);
     }
 
     public static void TaxiFareTests() throws IOException {

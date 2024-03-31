@@ -1,6 +1,9 @@
 package org.home.demo.x001;
 
 import org.home.demo.x001.models.TestDataObject;
+import org.home.demo.x001.models.ResponseObject;
+import java.time.LocalDate;
+
 dialect "mvel";
 
 // rule values at B10, header at B5
@@ -11,9 +14,25 @@ rule "TestFieldsTable Sheet_10"
 		testObjectAlias.setTest_field3( "Test 1 was true" );
 end
 
-//rule "TestFieldsTable Hello_10"
+
+// rule values at B12, header at B5
+rule "TestFieldsTable Sheet_12"
+	when
+		testObjectAlias : TestDataObject(test_field1 == "T3", test_field2 == 34, test_field4 >= LocalDate.parse("2018-12-27"));
+	then
+		testObjectAlias.setTest_field3( "Test 3 was true" );
+		ResponseObject ResponseAlias = new ResponseObject(); insert( ResponseAlias );
+		ResponseAlias.setResponseCD( "True" );
+		ResponseAlias.setResponseMsg( "Test 3 was true" );
+end
+
+//// rule values at B12, header at B5
+//rule "TestFieldsTable Sheet_12"
 //	when
-//        testObjectAlias:TestDataObject(test_field1 == "X1");
+//		testObjectAlias : TestDataObject(test_field1 == "T3", test_field2 == 34, test_field4 >= "2021-12-31")
 //	then
-//        testObjectAlias.setTest_field3("Test 1 was true");
+//		testObjectAlias.setTest_field3( "Test 3 was true" );
+//		ResponseObject ResponseAlias = new ResponseObject(); insert( ResponseAlias );
+//		ResponseAlias.setResponseCD( "True" );
+//		ResponseAlias.setResponseMsg( "Test 3 was true" );
 //end
